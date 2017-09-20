@@ -9,23 +9,28 @@
 
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using CTypes;
 
 namespace CSTypes {
   public enum ArgTypes {
     Words, // tokenize string into words.
-    Cut, // cut after 1st word of string.
-    Lines // tokenize string into lines.
+    Cut,   // cut after 1st word of string.
+    Lines  // tokenize string into lines.
   }
 
+
   public class ArgInterpreter : IFluentInterface {
+    /// <summary>
+    ///   Tokenizes string for processing.
+    /// </summary>
+    /// <param name="str">String to be processed.</param>
+    /// <param name="type">Argument type.  [Cut, Words, Lines]</param>
     public ArgInterpreter(string str, ArgTypes type = ArgTypes.Words) {
       Tokens = new List<string>();
       if (string.IsNullOrEmpty(str))
         return;
       switch (type) {
         case ArgTypes.Cut:
-          var m = Regex.Match(str, @"[ \t\r\n]*(\s*\S+)\s*(.*)", RegexOptions.Singleline);
+          var m = Regex.Match(str, @"(\S+)[$|\s+](.+)", RegexOptions.Singleline);
           Tokens.Add(m.Groups[1].Value);
           Tokens.Add(m.Groups[2].Value);
           break;
