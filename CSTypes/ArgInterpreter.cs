@@ -46,7 +46,9 @@ namespace CSTypes {
     public List<string> Tokens { get; }
 
 
-    /// <inheritdoc />
+    /// <summary>
+    ///  ToString
+    /// </summary>
     /// <returns></returns>
     public new string ToString() {
       return string.Join(" ", Tokens);

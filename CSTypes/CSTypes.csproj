@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFrameworks>net47;netcoreapp2.0;netstandard2.0</TargetFrameworks>
     <PackageId>CSTypes</PackageId>
     <Description>C# Types Argument Parser</Description>
     <Company>Bio-Hazard Industries</Company>
@@ -9,7 +9,7 @@
     <Product>CSTypes</Product>
     <Copyright>Copyright © 1998-2017</Copyright>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <PackageTags></PackageTags>
+    <PackageTags>ArgInterpreter CSTypes C#</PackageTags>
     <RepositoryType>GIT</RepositoryType>
     <PackageProjectUrl>https://github.com/Latency/CSTypes/</PackageProjectUrl>
     <PackageIconUrl>http://bio-hazard.us/ico/kitty.ico</PackageIconUrl>
@@ -17,6 +17,8 @@
     <PackageLicenseUrl>http://www.gnu.org/licenses/gpl-3.0.en.html</PackageLicenseUrl>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>snKey.pfx</AssemblyOriginatorKeyFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
