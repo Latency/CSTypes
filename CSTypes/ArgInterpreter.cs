@@ -30,12 +30,12 @@ namespace CSTypes {
         return;
       switch (type) {
         case ArgTypes.Cut:
-          var m = Regex.Match(str, @"(\S+)[$|\s+](.+)", RegexOptions.Singleline);
+          var m = Regex.Match(str, @"\s*([^ ]+)\s*(.*)", RegexOptions.Singleline);
           Tokens.Add(m.Groups[1].Value);
           Tokens.Add(m.Groups[2].Value);
           break;
         case ArgTypes.Words:
-          Tokens.AddRange(Regex.Split(str.Trim(), @"\s+"));
+          Tokens.AddRange(Regex.Split(str.Trim(), @"\s +"));
           break;
         case ArgTypes.Lines:
           Tokens.AddRange(Regex.Split(str.Trim(), @"\r?\n|\n?\r"));
