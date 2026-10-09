@@ -1,23 +1,63 @@
 ﻿# CSTypes
-### C# Types Argument Parser
+
+
+C# Types Argument Parser
 
 
 ---
 
 
-|              |   Description                                                  |
-|--------------|----------------------------------------------------------------|
-| CREATED BY:  | Latency McLaughlin                                                     |
-| UPDATED:     | 4/11/2024                          |
-| FRAMEWORK:   | [netstandard2.1], [netstandard2.0], [net452] ([Latest])                                |
-| LANGUAGE:    | [C#] preview                                            |
-| OUTPUT TYPE: | Library [API]                                            |
-| SUPPORTS:    | [Visual Studio]                                                |
-| GFX SUBSYS:  | [None]                                                     |
-| TAGS:        | [ArgInterpreter], [CSTypes], [C#]                                                |
-| STATUS       | [![.NET Core Desktop Build](https://github.com/Latency/CSTypes/actions/workflows/dotnet.yml/badge.svg)](https://github.com/Latency/CSTypes/actions/workflows/dotnet.yml)                                                     |
-| LICENSE:     | [![License](https://img.shields.io/badge/MIT-License-yellowgreen.svg)](https://github.com/Latency/CSTypes/blob/master/MIT-LICENSE.txt)                                                    |
-| VERSION:     | [![GitHub Release](https://img.shields.io/badge/Version-1.0.5-blue)](https://github.com/Latency/CSTypes/releases)                                                    |
+<table>
+<tr>
+<th></th>
+<th>Description</th>
+</tr>
+<tr>
+<td>CREATED BY:</td>
+<td>[Latency McLaughlin]</td>
+</tr>
+<tr>
+<td>UPDATED:</td>
+<td>10/9/2026</td>
+</tr>
+<tr>
+<td>FRAMEWORKS:</td>
+<td>netstandard2.1, netstandard2.0, net461</td>
+</tr>
+<tr>
+<td>LANGUAGE:</td>
+<td>[C#] preview</td>
+</tr>
+<tr>
+<td>OUTPUT TYPE:</td>
+<td>Library [API]</td>
+</tr>
+<tr>
+<td>SUPPORTS:</td>
+<td>[Visual Studio]</td>
+</tr>
+<tr>
+<td>GFX SUBSYS:</td>
+<td>[None]</td>
+</tr>
+<tr>
+<td>TAGS:</td>
+<td>[ArgInterpreter], [CSTypes], [C#]</td>
+</tr>
+<tr>
+<td>STATUS:</td>
+<td><a href="https://github.com/Latency/CSTypes/actions/workflows/status.yml"><img src="https://github.com/Latency/CSTypes/actions/workflows/status.yml/badge.svg"></a></td>
+</tr>
+<tr>
+<td>LICENSE:</td>
+<td><a href="https://github.com/Latency/CSTypes/blob/master/MIT-LICENSE.txt"><img src="https://img.shields.io/github/license/Latency/CSTypes?style=plastic&logo=GitHub&logoColor=black&label=License&color=yellowgreen"></a></td>
+</tr>
+<tr>
+<td>VERSION:</td>
+<td>1.0.6</td>
+</tr>
+<!-- VERSION: 1.0.6 -->
+</table>
 
 
 <hr>
