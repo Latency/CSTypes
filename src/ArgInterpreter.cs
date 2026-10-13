@@ -5,18 +5,10 @@
 // Date:     04/11/2024
 // ****************************************************************************
 
-using System;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using CSTypes.Enums;
 
 namespace CSTypes;
-
-public enum ArgTypes
-{
-    Words, // tokenize string into words.
-    Cut,   // cut after 1st word of string.
-    Lines  // tokenize string into lines.
-}
 
 public class ArgInterpreter : IFluentInterface
 {
@@ -46,7 +38,7 @@ public class ArgInterpreter : IFluentInterface
                 Tokens.AddRange(Regex.Split(str.Trim(), @"\r?\n|\n?\r"));
                 break;
             default:
-                throw new ArgumentOutOfRangeException(nameof(type), type, null);
+                throw new ArgumentOutOfRangeException(nameof(type));
         }
     }
 

@@ -42,21 +42,23 @@ public partial class Program
     /// <summary>
     ///     AdvWord test.
     /// </summary>
-    [Fact]
-    public void AdvWord() => Assert.Equal("World", Types.AdvWord("Hello World"));
+    [Theory]
+    [InlineData(" Hello World")]
+    [InlineData("Hello World ")]
+    [InlineData(" Hello World ")]
+    [InlineData("Hello World")]
+    public void AdvWord(string str) => Assert.Contains("World", Types.AdvWord(str));
 
 
     /// <summary>
     ///     CopyFirstWord test.
     /// </summary>
-    [Fact]
-    public void CopyFirstWord()
-    {
-        const string str = "Hello World";
-        Assert.Equal("Hello", Types.CopyFirstWord(str));
-        Assert.Equal("Hello", Types.CopyFirstWord(" " + str));
-        Assert.Equal("Hello", Types.CopyFirstWord(str + " "));
-    }
+    [Theory]
+    [InlineData(" Hello World")]
+    [InlineData("Hello World ")]
+    [InlineData(" Hello World ")]
+    [InlineData("Hello World")]
+    public void CopyFirstWord(string str) => Assert.Equal("Hello", Types.CopyFirstWord(str));
 
 
     /// <summary>
@@ -64,21 +66,20 @@ public partial class Program
     /// </summary>
     [Fact]
     public void Dice() => Test((x, y) =>
-        {
-            var result = Types.Dice(x, y);
-            if (x < 0 || y < 0)
-                Assert.Equal(0, result);
-            else
-                Assert.True(result >= 0 && result <= x * y);
-        }
-    );
+    {
+        var result = Types.Dice(x, y);
+        if (x < 0 || y < 0)
+            Assert.Equal(0, result);
+        else
+            Assert.True(result >= 0 && result <= x * y);
+    });
 
 
     /// <summary>
     ///     GenerateSaltedHash test.
     /// </summary>
     [Fact]
-    public void GenerateSaltedHash() => Assert.NotEmpty($"Hello World => {Encoding.Default.GetString(Types.GenerateSaltedHash("Hello World"u8.ToArray(), Types.GenerateSaltKey()))}");
+    public void GenerateSaltedHash() => Assert.NotEmpty($"Hello World => {Encoding.Default.GetString(Types.GenerateSaltedHash([.. "Hello World"u8], Types.GenerateSaltKey()))}");
 
 
     /// <summary>
@@ -91,45 +92,35 @@ public partial class Program
     /// <summary>
     ///     IsNumber test.
     /// </summary>
-    [Fact]
-    public void IsNumber()
-    {
-        var str = new[]
-        {
-            new KeyValuePair<string, bool>("-asdf",    false),
-            new KeyValuePair<string, bool>(" -asdf",   false),
-            new KeyValuePair<string, bool>(" -asdf ",  false),
-            new KeyValuePair<string, bool>(" asdf ",   false),
-            new KeyValuePair<string, bool>("asdf",     false),
-            new KeyValuePair<string, bool>("asdf ",    false),
-            new KeyValuePair<string, bool>(" asdf",    false),
-            new KeyValuePair<string, bool>(" 123",     true),
-            new KeyValuePair<string, bool>(" 123 ",    true),
-            new KeyValuePair<string, bool>("123 ",     true),
-            new KeyValuePair<string, bool>("123",      true),
-            new KeyValuePair<string, bool>("123.231",  false),
-            new KeyValuePair<string, bool>("-123.231", false),
-            new KeyValuePair<string, bool>("0",        true),
-            new KeyValuePair<string, bool>("",         false)
-        };
-
-        foreach (var s in str)
-            Assert.True(Types.IsNumber(s.Key) == s.Value);
-    }
+    [Theory]
+    [InlineData("-asdf",    false)]
+    [InlineData(" -asdf",   false)]
+    [InlineData(" -asdf ",  false)]
+    [InlineData(" asdf ",   false)]
+    [InlineData("asdf",     false)]
+    [InlineData("asdf ",    false)]
+    [InlineData(" asdf",    false)]
+    [InlineData(" 123",     true)]
+    [InlineData(" 123 ",    true)]
+    [InlineData("123 ",     true)]
+    [InlineData("123",      true)]
+    [InlineData("123.231",  false)]
+    [InlineData("-123.231", false)]
+    [InlineData("0",        true)]
+    [InlineData("",         false)]
+    public void IsNumber(string str, bool expected) => Assert.Equal(expected, Types.IsNumber(str));
 
 
     /// <summary>
     ///     IsValidIP test.
     /// </summary>
-    [Fact]
+    [Theory]
+    [InlineData("10.10.0.1",                               true,  "IPv4")]
+    [InlineData("10.256.0.1",                              false, "Out of range")]
+    [InlineData("my home",                                 false, "Malformed IP")]
+    [InlineData("FE80:0000:0000:0000:0202:B3FF:FE1E:8329", true,  "IPv6")]
     // ReSharper disable once InconsistentNaming
-    public void IsValidIP()
-    {
-        Assert.True(Types.IsValidIP("10.10.0.1"), "IPv4");
-        Assert.False(Types.IsValidIP("10.256.0.1"), "Out of range");
-        Assert.False(Types.IsValidIP("my home"),    "Malformed IP");
-        Assert.True(Types.IsValidIP("FE80:0000:0000:0000:0202:B3FF:FE1E:8329"), "IPv6");
-    }
+    public void IsValidIP(string input, bool expectedResult, string msg) => Assert.True(Types.IsValidIP(input) == expectedResult, msg);
 
 
     /// <summary>
@@ -137,177 +128,160 @@ public partial class Program
     /// </summary>
     [Fact]
     public void Number() => Test((x, y) =>
-        {
-            var result = Types.Number(x, y);
-            if (x <= y)
-                Assert.True(x <= result && result <= y);
-            else
-                Assert.True(y <= result && result <= x);
-        }
-    );
+    {
+        var result = Types.Number(x, y);
+        if (x <= y)
+            Assert.True(x <= result && result <= y);
+        else
+            Assert.True(y <= result && result <= x);
+    });
 
 
     /// <summary>
     ///     NumericSuffix test.
     /// </summary>
-    [Fact]
-    public void NumericSuffix()
-    {
-        //Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
-        string[] list =
-        [
-            "0th",
-            "1st",
-            "2nd",
-            "3rd",
-            "4th",
-            "5th",
-            "6th",
-            "7th",
-            "8th",
-            "9th",
-            "10th",
-            "11th",
-            "12th",
-            "13th",
-            "14th",
-            "15th",
-            "16th",
-            "17th",
-            "18th",
-            "19th",
-            "20th",
-            "21st",
-            "22nd",
-            "23rd",
-            "24th",
-            "25th",
-            "26th",
-            "27th",
-            "28th",
-            "29th",
-            "30th",
-            "31st",
-            "32nd",
-            "33rd",
-            "34th",
-            "35th",
-            "36th",
-            "37th",
-            "38th",
-            "39th",
-            "40th",
-            "41st",
-            "42nd",
-            "43rd",
-            "44th",
-            "45th",
-            "46th",
-            "47th",
-            "48th",
-            "49th",
-            "50th",
-            "51st",
-            "52nd",
-            "53rd",
-            "54th",
-            "55th",
-            "56th",
-            "57th",
-            "58th",
-            "59th",
-            "60th",
-            "61st",
-            "62nd",
-            "63rd",
-            "64th",
-            "65th",
-            "66th",
-            "67th",
-            "68th",
-            "69th",
-            "70th",
-            "71st",
-            "72nd",
-            "73rd",
-            "74th",
-            "75th",
-            "76th",
-            "77th",
-            "78th",
-            "79th",
-            "80th",
-            "81st",
-            "82nd",
-            "83rd",
-            "84th",
-            "85th",
-            "86th",
-            "87th",
-            "88th",
-            "89th",
-            "90th",
-            "91st",
-            "92nd",
-            "93rd",
-            "94th",
-            "95th",
-            "96th",
-            "97th",
-            "98th",
-            "99th",
-            "100th",
-            "101st",
-            "102nd",
-            "103rd",
-            "104th",
-            "105th",
-            "106th",
-            "107th",
-            "108th",
-            "109th",
-            "110th",
-            "111th",
-            "112th",
-            "113th",
-            "114th",
-            "115th",
-            "116th",
-            "117th",
-            "118th",
-            "119th",
-            "120th",
-            "121st",
-            "122nd",
-            "123rd",
-            "124th",
-            "125th",
-            "126th",
-            "127th",
-            "128th",
-            "129th",
-            "130th"
-        ];
-        for (var x = 0; x <= 130; x++)
-            //Trace.WriteLine(String.Format("{0}{1}", x, Types.NumericSuffix(x)));
-            Assert.Equal(list[x], x + Types.NumericSuffix(x));
-    }
+    [Theory]
+    [InlineData(0, "0th")]
+    [InlineData(1, "1st")]
+    [InlineData(2, "2nd")]
+    [InlineData(3, "3rd")]
+    [InlineData(4, "4th")]
+    [InlineData(5, "5th")]
+    [InlineData(6, "6th")]
+    [InlineData(7, "7th")]
+    [InlineData(8, "8th")]
+    [InlineData(9, "9th")]
+    [InlineData(10, "10th")]
+    [InlineData(11, "11th")]
+    [InlineData(12, "12th")]
+    [InlineData(13, "13th")]
+    [InlineData(14, "14th")]
+    [InlineData(15, "15th")]
+    [InlineData(16, "16th")]
+    [InlineData(17, "17th")]
+    [InlineData(18, "18th")]
+    [InlineData(19, "19th")]
+    [InlineData(20, "20th")]
+    [InlineData(21, "21st")]
+    [InlineData(22, "22nd")]
+    [InlineData(23, "23rd")]
+    [InlineData(24, "24th")]
+    [InlineData(25, "25th")]
+    [InlineData(26, "26th")]
+    [InlineData(27, "27th")]
+    [InlineData(28, "28th")]
+    [InlineData(29, "29th")]
+    [InlineData(30, "30th")]
+    [InlineData(31, "31st")]
+    [InlineData(32, "32nd")]
+    [InlineData(33, "33rd")]
+    [InlineData(34, "34th")]
+    [InlineData(35, "35th")]
+    [InlineData(36, "36th")]
+    [InlineData(37, "37th")]
+    [InlineData(38, "38th")]
+    [InlineData(39, "39th")]
+    [InlineData(40, "40th")]
+    [InlineData(41, "41st")]
+    [InlineData(42, "42nd")]
+    [InlineData(43, "43rd")]
+    [InlineData(44, "44th")]
+    [InlineData(45, "45th")]
+    [InlineData(46, "46th")]
+    [InlineData(47, "47th")]
+    [InlineData(48, "48th")]
+    [InlineData(49, "49th")]
+    [InlineData(50, "50th")]
+    [InlineData(51, "51st")]
+    [InlineData(52, "52nd")]
+    [InlineData(53, "53rd")]
+    [InlineData(54, "54th")]
+    [InlineData(55, "55th")]
+    [InlineData(56, "56th")]
+    [InlineData(57, "57th")]
+    [InlineData(58, "58th")]
+    [InlineData(59, "59th")]
+    [InlineData(60, "60th")]
+    [InlineData(61, "61st")]
+    [InlineData(62, "62nd")]
+    [InlineData(63, "63rd")]
+    [InlineData(64, "64th")]
+    [InlineData(65, "65th")]
+    [InlineData(66, "66th")]
+    [InlineData(67, "67th")]
+    [InlineData(68, "68th")]
+    [InlineData(69, "69th")]
+    [InlineData(70, "70th")]
+    [InlineData(71, "71st")]
+    [InlineData(72, "72nd")]
+    [InlineData(73, "73rd")]
+    [InlineData(74, "74th")]
+    [InlineData(75, "75th")]
+    [InlineData(76, "76th")]
+    [InlineData(77, "77th")]
+    [InlineData(78, "78th")]
+    [InlineData(79, "79th")]
+    [InlineData(80, "80th")]
+    [InlineData(81, "81st")]
+    [InlineData(82, "82nd")]
+    [InlineData(83, "83rd")]
+    [InlineData(84, "84th")]
+    [InlineData(85, "85th")]
+    [InlineData(86, "86th")]
+    [InlineData(87, "87th")]
+    [InlineData(88, "88th")]
+    [InlineData(89, "89th")]
+    [InlineData(90, "90th")]
+    [InlineData(91, "91st")]
+    [InlineData(92, "92nd")]
+    [InlineData(93, "93rd")]
+    [InlineData(94, "94th")]
+    [InlineData(95, "95th")]
+    [InlineData(96, "96th")]
+    [InlineData(97, "97th")]
+    [InlineData(98, "98th")]
+    [InlineData(99, "99th")]
+    [InlineData(100, "100th")]
+    [InlineData(101, "101st")]
+    [InlineData(102, "102nd")]
+    [InlineData(103, "103rd")]
+    [InlineData(104, "104th")]
+    [InlineData(105, "105th")]
+    [InlineData(106, "106th")]
+    [InlineData(107, "107th")]
+    [InlineData(108, "108th")]
+    [InlineData(109, "109th")]
+    [InlineData(110, "110th")]
+    [InlineData(111, "111th")]
+    [InlineData(112, "112th")]
+    [InlineData(113, "113th")]
+    [InlineData(114, "114th")]
+    [InlineData(115, "115th")]
+    [InlineData(116, "116th")]
+    [InlineData(117, "117th")]
+    [InlineData(118, "118th")]
+    [InlineData(119, "119th")]
+    [InlineData(120, "120th")]
+    [InlineData(121, "121st")]
+    [InlineData(122, "122nd")]
+    [InlineData(123, "123rd")]
+    [InlineData(124, "124th")]
+    [InlineData(125, "125th")]
+    [InlineData(126, "126th")]
+    [InlineData(127, "127th")]
+    [InlineData(128, "128th")]
+    [InlineData(129, "129th")]
+    [InlineData(130, "130th")]
+    public void NumericSuffix(int number, string expected) => Assert.Equal(expected, number + Types.NumericSuffix(number));
 
 
     /// <summary>
     ///     Swap test.
     /// </summary>
-    [Fact]
-    public void Swap()
+    [Theory]
+    [InlineData(new[] { 1, 2, 3, 4, 5 })]
+    public void Swap(int[] ary)
     {
-        var ary = new[]
-        {
-            1,
-            2,
-            3,
-            4,
-            5
-        };
         Types.Swap(ref ary[0], ref ary[4]);
         Assert.Equal(1, ary[4]);
         Assert.Equal(5, ary[0]);

@@ -6,6 +6,7 @@
 // ****************************************************************************
 
 using CSTypes;
+using CSTypes.Enums;
 
 namespace Unit_Tests;
 

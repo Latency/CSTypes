@@ -18,11 +18,11 @@ C# Types Argument Parser
 </tr>
 <tr>
 <td>UPDATED:</td>
-<td>10/9/2026</td>
+<td>10/12/2026</td>
 </tr>
 <tr>
 <td>FRAMEWORKS:</td>
-<td>netstandard2.1, netstandard2.0, net461</td>
+<td>net45, net451, net452, net46, net461, net462, net47, net471, net472, net48, net481, netstandard2.0, netstandard2.1, net8.0, net9.0, net10.0, net11.0</td>
 </tr>
 <tr>
 <td>LANGUAGE:</td>
@@ -60,75 +60,75 @@ C# Types Argument Parser
 </table>
 
 
-<hr>
+---
 
 ## Navigation
-* <a href="#introduction">Introduction</a>
-* <a href="#history">History</a>
-* <a href="#solution">Solution</a>
-* <a href="#usage">Usage</a>
-* <a href="#installation">Installation</a>
-* <a href="#license">License</a>
 
-<hr>
+* [Introduction](#introduction)
+* [Usage](#usage)
+* [Installation](#installation)
+* [License](#license)
 
-<h2><a name="introduction">Introduction</a></h2>
+---
 
-Gets assembly information at runtime commonly found in *Properties* within .NET assemblies.
-Dynamically loads / unloads assemblies and their dependencies within a proxy for validation.
+## Introduction
 
-<h2><a name=history">History</a></h2>
+CSTypes is a lightweight C# utility library for text-driven games and command-style applications. It provides:
 
-Trying to get information out of an assembly without loading it into the current application domain is not that simple.
-There is no way to get custom assembly attributes without loading it into the current AppDomain.
-There is a special assembly loading method, <i>Assembly.ReflectionOnlyLoad()</i>, which uses a "reflection-only" load context.
-This lets you load assemblies that cannot be executed, but can have their metadata read.
-You cannot get typed attributes from this kind of assembly, only CustomAttributeData.
-That class doesn't provide any good way to filter for a specific attribute.
+- **Command parsing:** split input into words, lines, or a command and its remainder with `ArgInterpreter`, and peel off words with `CopyFirstWord` and `AdvWord`.
+- **Dice and random numbers:** roll dice (`Dice`), generate bounded random numbers (`Number`), and format ordinals such as 1st, 2nd and 3rd (`NumericSuffix`).
+- **Validation helpers:** check for whole numbers (`IsNumber`) and valid IPv4/IPv6 addresses (`IsValidIP`).
+- **Security helpers:** generate salt keys and SHA-256 salted hashes for storing passwords.
 
-Even worse, a reflection-only load does not load any dependency assemblies, but it forces you to do it manually.
-That makes it objectively worse than <i>Assembly.Load()</i> which at least gets the dependencies to load automatically.
+The library multi-targets .NET Framework 4.5 through 4.8.1, .NET Standard 2.0/2.1, and .NET 8 through .NET 11.
 
-MEF includes a whole ton of custom reflection code to make this work.
+## Usage
 
-Ultimately, you cannot unload an assembly once it has been loaded.
-You need to unload the entire app domain, as described in this [MSDN article].
+### `ArgInterpreter`
 
-<h2><a name="solution">Solution</a></h2>
+Tokenizes a string into `Tokens` (`List<string>`).
 
-Based on the following premises:
+| Member | Description |
+|---|---|
+| `ArgInterpreter(string str, ArgTypes type = ArgTypes.Words)` | Tokenizes `str` according to `type`. |
+| `Tokens` | The resulting tokens. |
+| `ToString()` | Joins the tokens with a single space. |
 
-Creating an assembly proxy (or wrapper), derived from MarshalByRefObject, so that the CLR can marshal it by reference across AppDomain boundaries.
-Loading the assembly within this proxy.
-Performing the reflection inside this proxy and return the data you need.
-Creating a temporary AppDomain and instantiating the assembly proxy in this AppDomain (AppDomain.CreateInstanceFrom).
-Unloading the AppDomain as soon as you finished reflecting.
+### `ArgTypes`
 
-However, you have to keep in mind that reflection on the assembly loaded this way is only possible inside the proxy (the one derived from MarshalByRefObject).
-It is not possible to return any "reflection object" (anything defined in the System.Reflection namespace, such as Type, MethodInfo, etc.).
-Trying to access these from another AppDomain (the caller's domain) would result in exceptions.
+| Value | Description |
+|---|---|
+| `Words` | Tokenize the string into words. |
+| `Cut` | Cut after the first word of the string. |
+| `Lines` | Tokenize the string into lines. |
 
-<h2><a name="usage">Usage</a></h2>
+### `Types` (static)
 
-- Types called across AppDomain boundaries must inherit MarshalByRefObject.
-- Types called across AppDomain boundaries must be called via an interface.
-- The property LoaderOptimization must be set to LoaderOptimization.MultiDomainHost.
-- Construct a proxy manager that loads assemblies into AppDomains, performs queries, and unloads AppDomains.
+| Method | Description |
+|---|---|
+| `string CopyFirstWord(string s)` | Returns the first word of a string. |
+| `string AdvWord(string text, bool withPunctuation = false)` | Returns the string with its first word skipped, optionally treating punctuation as delimiters. |
+| `void Swap<T>(ref T x, ref T y)` | Swaps two values. |
+| `int Number(int minValue, int maxValue)` | Returns a random number in the range; reversed bounds are swapped. |
+| `int Dice(int number, int size)` | Simulates rolling `number` dice with `size` sides. Returns 0 for non-positive arguments. |
+| `bool IsNumber(string str)` | Checks whether a string is a whole number. |
+| `bool IsValidIP(string addr)` | Validates IPv4 and IPv6 addresses (full and compressed). |
+| `string NumericSuffix(int number)` | Returns the ordinal suffix of a number (`st`, `nd`, `rd`, `th`). |
+| `byte[] GenerateSaltKey()` | Generates a random 8-byte salt key. |
+| `byte[] GenerateSaltedHash(byte[] plainText, byte[] salt)` | Generates a SHA-256 salted hash. |
 
-<h2><a name="installation">Installation</a></h2>
+## Installation
 
-This library can be installed using NuGet found [here](https://www.nuget.org/packages/CTypes/).
+This library can be installed using NuGet found [here](https://www.nuget.org/packages/CSTypes/).
 
-<h2><a name="license">License</a></h2>
+## License
 
 The source code for the site is licensed under the MIT license, which you can find in
 the [MIT-LICENSE].txt file.
 
-All graphical assets are licensed under the
-[Creative Commons Attribution 3.0 Unported License](https://creativecommons.org/licenses/by/3.0/).
+---
 
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job.)
 
    [GNU LESSER GENERAL PUBLIC LICENSE]: <http://www.gnu.org/licenses/lgpl-3.0.en.html>
-   [MSDN article]: <https://msdn.microsoft.com/en-us/library/c5b8a8f9(v=vs.100).aspx>
    [MIT-License]: <http://choosealicense.com/licenses/mit/>

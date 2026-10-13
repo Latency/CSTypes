@@ -4,39 +4,62 @@
 // Author:   Latency McLaughlin
 // Date:     04/11/2024
 // ****************************************************************************
-
 // ReSharper disable UnusedMember.Global
 
-using System;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Security.Cryptography;
-using System.Text.RegularExpressions;
 
 namespace CSTypes;
 
 public static class Types
 {
-    private static readonly Random Seed = new();
-
     /// <summary>
     ///     Obtains the first word of a string
     /// </summary>
     /// <param name="s"></param>
     /// <returns>The first word</returns>
-    public static string CopyFirstWord(string s) => s.TrimStart().Split(' ').First();
+    public static string CopyFirstWord(string s) => s.TrimStart()?.Split(' ')?.FirstOrDefault() ?? "";
 
 
     /// <summary>
     ///     Obtains the next word in a string
     /// </summary>
-    /// <param name="s"></param>
+    /// <param name="text"></param>
+    /// <param name="withPunctuation"></param>
     /// <returns>Skips the first word of a string</returns>
-    public static string AdvWord(string s)
+    public static string AdvWord(string text, bool withPunctuation = false)
     {
-        var wrd = CopyFirstWord(s);
-        return s[wrd.Length..].TrimStart(' ');
+        // Split by spaces and remove empty entries (caused by multiple spaces)
+        // Trim punctuation like periods or commas from the edges of words
+        char[] delimiters =
+        [
+            ' ', .. withPunctuation
+                ? new[]
+                {
+                    '.',
+                    ',',
+                    '!',
+                    '?',
+                    ';',
+                    ':'
+                }
+                :
+#if NET46_OR_GREATER || NETSTANDARD
+                Array.Empty<char>()
+#else
+                new char[0]
+#endif
+        ];
+        var words = text.Split(delimiters, 2, StringSplitOptions.RemoveEmptyEntries);
+        if (words.Length < 2)
+            return string.Empty;
+
+        // Find where the second word begins in the original text
+        var index = text.IndexOf(words[1], StringComparison.Ordinal);
+
+        // Extract everything from the start of the second word to the end
+        return text[index..];
     }
 
 
@@ -59,7 +82,7 @@ public static class Types
         // Swap if reversed.
         if (minValue > maxValue)
             Swap(ref minValue, ref maxValue);
-        return Seed.Next(minValue, maxValue);
+        return new Random().Next(minValue, maxValue);
     }
 
 
@@ -77,7 +100,7 @@ public static class Types
     /// </summary>
     /// <param name="str"></param>
     /// <returns></returns>
-    public static bool IsNumber(string str) => Regex.Match(str.Trim(), "^-[0-9]+$|^[0-9]+$").Success;
+    public static bool IsNumber(string str) => int.TryParse(str, out _);
 
 
     /// <summary>
@@ -86,7 +109,7 @@ public static class Types
     /// <param name="addr"></param>
     /// <returns></returns>
     // ReSharper disable once InconsistentNaming
-    public static bool IsValidIP(string addr) => IPAddress.TryParse(addr, out var ip) && ip.AddressFamily is AddressFamily.InterNetwork or AddressFamily.InterNetworkV6;
+    public static bool IsValidIP(string addr) => IPAddress.TryParse(addr, out var ip) && ip is { AddressFamily: AddressFamily.InterNetwork or AddressFamily.InterNetworkV6 };
 
 
     /// <summary>
@@ -115,7 +138,6 @@ public static class Types
                 suf = "th";
                 break;
         }
-
         return suf;
     }
 
@@ -127,8 +149,12 @@ public static class Types
     public static byte[] GenerateSaltKey()
     {
         var salt = new byte[8];
-        var rng  = new RNGCryptoServiceProvider();
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_0_OR_GREATER
+        RandomNumberGenerator.Fill(salt);
+#else
+        using var rng = new RNGCryptoServiceProvider();
         rng.GetBytes(salt);
+#endif
         return salt;
     }
 
@@ -141,16 +167,11 @@ public static class Types
     /// <returns></returns>
     public static byte[] GenerateSaltedHash(byte[] plainText, byte[] salt)
     {
-        HashAlgorithm algorithm = new SHA256Managed();
-
-        var plainTextWithSaltBytes = new byte[plainText.Length + salt.Length];
-
-        for (var i = 0; i < plainText.Length; i++)
-            plainTextWithSaltBytes[i] = plainText[i];
-
-        for (var i = 0; i < salt.Length; i++)
-            plainTextWithSaltBytes[plainText.Length + i] = salt[i];
-
-        return algorithm.ComputeHash(plainTextWithSaltBytes);
+        using var algorithm = SHA256.Create();
+        if (algorithm == null)
+            return [];
+        algorithm.TransformBlock(plainText, 0, plainText.Length, null, 0);
+        algorithm.TransformFinalBlock(salt, 0, salt.Length);
+        return algorithm.Hash ?? [];
     }
 }
