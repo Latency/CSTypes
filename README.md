@@ -4,29 +4,31 @@ C# Types Argument Parser
  
 | | Description |
 |---|---|
+| ASSEMBLY NAME: | CSTypes |
 | CREATED BY: | [Latency McLaughlin] |
-| UPDATED: | 10/13/2026 |
+| UPDATED: | 10/15/2026 |
 | FRAMEWORKS: | net45, net451, net452, net46, net461, net462, net47, net471, net472, net48, net481, netstandard2.0, netstandard2.1, net8.0, net9.0, net10.0, net11.0 |
 | LANGUAGE: | [C#] preview |
-| OUTPUT TYPE: | Library [API] |
+| OUTPUT TYPE: | [Library] [API] |
 | SUPPORTS: | [Visual Studio] |
 | GFX SUBSYS: | [None] |
 | TAGS: | [ArgInterpreter], [CSTypes], [C#] |
 | STATUS: | [![workflow-badge](https://github.com/Latency/CSTypes/actions/workflows/status.yml/badge.svg)](https://github.com/Latency/CSTypes/actions/workflows/status.yml) |
 | LICENSE: | [![license-badge](https://img.shields.io/github/license/Latency/CSTypes?style=plastic&logo=GitHub&logoColor=black&label=License&color=yellowgreen)](https://github.com/Latency/CSTypes/blob/master/MIT-LICENSE.txt) |
-| VERSION: | 1.0.7 |
-<!-- VERSION: 1.0.7 -->
+| VERSION: | 1.0.8 |
  
 ---
 
 ## Navigation
-* [Installation](#installation)
-* [Donation](#donation)
-* [License](#license)
 
 * [Introduction](#introduction)
 * [Usage](#usage)
 * [Installation](#installation)
+* [License](#license)
+* [Installation](#installation)
+* [References](#references)
+* [Report An Issue](#report-an-issue)
+* [Donation](#donation)
 * [License](#license)
 
 ---
@@ -97,12 +99,20 @@ the [MIT-LICENSE].txt file.
 
 This library can be installed from [NuGet].
 
-## Donation
-If you want to donate to my efforts on this project, please use the following link,
+## References
 
+[CSTypes], [ArgInterpreter]
+
+## Report An Issue
+
+If you have a patch to contribute, a feature to request, or a bug to report, please post to the [Issue Tracker](https://github.com/Latency/CSTypes/issues).
+
+## Donation
+
+Click the button to donate to my efforts:
 [![Donate via Paypal](https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif)](https://paypal.me/Latency2?country.x=US&locale.x=en_US)
 
-   ## License
+## License
 
 The source code for the site is licensed under the MIT license, which you can find in the [MIT-LICENSE].txt file.
   
@@ -113,9 +123,14 @@ The source code for the site is licensed under the MIT license, which you can fi
    [NuGet]: <https://github.com/Latency/CSTypes/pkgs/nuget/CSTypes/>
    [.NET]: <https://en.wikipedia.org/wiki/.NET_Framework/>
    [Visual Studio]: <https://en.wikipedia.org/wiki/Microsoft_Visual_Studio/>
+   [Library]: <https://en.wikipedia.org/wiki/Software_library/>
    [Latency McLaughlin]: <https://www.linkedin.com/in/Latency/>
    [API]: <https://en.wikipedia.org/wiki/Application_programming_interface>
    [C#]: <https://en.wikipedia.org/wiki/C_Sharp_(programming_language)>
    [DLL]: <https://en.wikipedia.org/wiki/Dynamic-link_library>
    [MIT-License]: <http://choosealicense.com/licenses/mit/>
+   [WPF]: <https://en.wikipedia.org/wiki/Windows_Presentation_Foundation/>
+   [WinForms]: <https://en.wikipedia.org/wiki/Windows_Forms/>
    [Unit Tests]: <https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-csharp-with-xunit>
+   [CSTypes]: <https://github.com/Latency/CSTypes>
+   [ArgInterpreter]: <https://github.com/Special-Delights/Circle-3.5/blob/master/src/interpreter.c>
