@@ -14,8 +14,8 @@ C# Types Argument Parser
 | GFX SUBSYS: | [None] |
 | TAGS: | [ArgInterpreter], [CSTypes], [C#] |
 | STATUS: | [![workflow-badge](https://github.com/Latency/CSTypes/actions/workflows/status.yml/badge.svg)](https://github.com/Latency/CSTypes/actions/workflows/status.yml) |
-| LICENSE: | [![license-badge](https://img.shields.io/github/license/Latency/CSTypes?style=plastic&logo=GitHub&logoColor=black&label=License&color=yellowgreen)](https://github.com/Latency/CSTypes/blob/master/MIT-LICENSE.txt) |
-| VERSION: | 1.0.9 |
+| LICENSE: | [![license-badge](https://img.shields.io/github/license/Latency/CSTypes?logo=GitHub&style=plastic&logoColor=black&label=License&color=yellowgreen)](https://github.com/Latency/CSTypes/blob/master/MIT-LICENSE.txt) |
+| VERSION: | 1.0.10 |
  
 ---
 
@@ -23,8 +23,6 @@ C# Types Argument Parser
 
 * [Introduction](#introduction)
 * [Usage](#usage)
-* [Installation](#installation)
-* [License](#license)
 * [Installation](#installation)
 * [References](#references)
 * [Report An Issue](#report-an-issue)
@@ -78,22 +76,6 @@ Tokenizes a string into `Tokens` (`List<string>`).
 | `string NumericSuffix(int number)` | Returns the ordinal suffix of a number (`st`, `nd`, `rd`, `th`). |
 | `byte[] GenerateSaltKey()` | Generates a random 8-byte salt key. |
 | `byte[] GenerateSaltedHash(byte[] plainText, byte[] salt)` | Generates a SHA-256 salted hash. |
-
-## Installation
-
-This library can be installed using NuGet found [here](https://www.nuget.org/packages/CSTypes/).
-
-## License
-
-The source code for the site is licensed under the MIT license, which you can find in
-the [MIT-LICENSE].txt file.
-
----
-
-[//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job.)
-
-   [GNU LESSER GENERAL PUBLIC LICENSE]: <http://www.gnu.org/licenses/lgpl-3.0.en.html>
-   [MIT-License]: <http://choosealicense.com/licenses/mit/>
  
 ## Installation
 

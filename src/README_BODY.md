@@ -4,8 +4,6 @@
 
 * [Introduction](#introduction)
 * [Usage](#usage)
-* [Installation](#installation)
-* [License](#license)
 
 ---
 
@@ -54,19 +52,3 @@ Tokenizes a string into `Tokens` (`List<string>`).
 | `string NumericSuffix(int number)` | Returns the ordinal suffix of a number (`st`, `nd`, `rd`, `th`). |
 | `byte[] GenerateSaltKey()` | Generates a random 8-byte salt key. |
 | `byte[] GenerateSaltedHash(byte[] plainText, byte[] salt)` | Generates a SHA-256 salted hash. |
-
-## Installation
-
-This library can be installed using NuGet found [here](https://www.nuget.org/packages/CSTypes/).
-
-## License
-
-The source code for the site is licensed under the MIT license, which you can find in
-the [MIT-LICENSE].txt file.
-
----
-
-[//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job.)
-
-   [GNU LESSER GENERAL PUBLIC LICENSE]: <http://www.gnu.org/licenses/lgpl-3.0.en.html>
-   [MIT-License]: <http://choosealicense.com/licenses/mit/>
