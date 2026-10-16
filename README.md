@@ -6,7 +6,7 @@ C# Types Argument Parser
 |---|---|
 | ASSEMBLY NAME: | CSTypes |
 | CREATED BY: | [Latency McLaughlin] |
-| UPDATED: | 10/15/2026 |
+| UPDATED: | 10/16/2026 |
 | FRAMEWORKS: | net45, net451, net452, net46, net461, net462, net47, net471, net472, net48, net481, netstandard2.0, netstandard2.1, net8.0, net9.0, net10.0, net11.0 |
 | LANGUAGE: | [C#] preview |
 | OUTPUT TYPE: | [Library] [API] |
@@ -15,7 +15,7 @@ C# Types Argument Parser
 | TAGS: | [ArgInterpreter], [CSTypes], [C#] |
 | STATUS: | [![workflow-badge](https://github.com/Latency/CSTypes/actions/workflows/status.yml/badge.svg)](https://github.com/Latency/CSTypes/actions/workflows/status.yml) |
 | LICENSE: | [![license-badge](https://img.shields.io/github/license/Latency/CSTypes?style=plastic&logo=GitHub&logoColor=black&label=License&color=yellowgreen)](https://github.com/Latency/CSTypes/blob/master/MIT-LICENSE.txt) |
-| VERSION: | 1.0.8 |
+| VERSION: | 1.0.9 |
  
 ---
 
